@@ -1,0 +1,1723 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Suavizamiento Exponencial Triple &#8212; Proyecto_Final_Time_Series</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'arima_final';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SUPPORT VECTOR REGRESSOR" href="SVM_final.html" />
+    <link rel="prev" title="Análisis Exploratorio de los datos (EDA)" href="eda_final.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyecto Final - Prediccion de serie de Tiempo para PM10
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="eda_final.html">Análisis Exploratorio de los datos (EDA)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Suavizamiento Exponencial Triple</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="SVM_final.html">SUPPORT VECTOR REGRESSOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="red_neuronal_final.html">LSTM</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Farima_final.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/arima_final.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Suavizamiento Exponencial Triple</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Suavizamiento Exponencial Triple</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenar-modelo">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluar-modelo">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#arima">ARIMA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#arima-rolling">ARIMA - ROLLING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sarima">SARIMA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">EVALUAR MODELO</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="suavizamiento-exponencial-triple">
+<h1>Suavizamiento Exponencial Triple<a class="headerlink" href="#suavizamiento-exponencial-triple" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tools.sm_exceptions</span> <span class="kn">import</span> <span class="n">ConvergenceWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">ConvergenceWarning</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">SimpleExpSmoothing</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">import</span> <span class="nn">statsmodels.tsa.api</span> <span class="k">as</span> <span class="nn">smt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;seaborn-whitegrid&quot;</span><span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lectura de los datos</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">kaes1</span><span class="se">\\</span><span class="s2">Documents</span><span class="se">\\</span><span class="s2">Series de tiempo&quot;</span><span class="p">)</span>
+<span class="n">ermita</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datos_imputados.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;test_data.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">ermita</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">])</span>
+<span class="n">test_data</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forecast_accuracy</span><span class="p">(</span><span class="n">forecast</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">str_name</span><span class="p">):</span>
+    
+    <span class="n">mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">forecast</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span> <span class="c1"># MAPE</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">forecast</span> <span class="o">-</span> <span class="n">actual</span><span class="p">))</span>                 <span class="c1"># MAE</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">forecast</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">.5</span>               <span class="c1"># RMSE</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">forecast</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>                    <span class="c1"># MSE</span>
+    
+    <span class="n">df_acc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">mae</span><span class="p">],</span>
+                           <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">mse</span><span class="p">],</span>
+                           <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">mape</span><span class="p">],</span>
+                           <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">rmse</span><span class="p">]},</span>
+                          <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">str_name</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">df_acc</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ses_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+        <span class="n">ses_model</span> <span class="o">=</span> <span class="n">SimpleExpSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">ses_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+            <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mae</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Se evaluan distintos valores de parámetros para el modelo de Suavizamiento Exponencial triple, con el fin de encontrar los mejores:</p>
+<div class="cell tag_hide-input tag_hide-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+
+<span class="c1"># ... (rest of the code for importing data and preparing test set)</span>
+
+<span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">betas</span> <span class="o">=</span> <span class="n">gammas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)</span>
+<span class="n">abg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">gammas</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">abg</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tes_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span>\
+                    <span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tes_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">tau_test</span><span class="p">)</span>
+        <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+            <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">mae</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error encountered with combination: </span><span class="si">{</span><span class="n">comb</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># Manejo de errores genérico (opcional)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error encountered with combination: </span><span class="si">{</span><span class="n">comb</span><span class="si">}</span><span class="s2">. Exception: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ... (rest of the code for printing best parameters and evaluating model)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>De este proceso, los mejores parámetros obtenidos son:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.30000000000000004</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">19.16077209125565</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best alpha: </span><span class="si">{</span><span class="n">best_alpha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best beta: </span><span class="si">{</span><span class="n">best_beta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best_gamma: </span><span class="si">{</span><span class="n">best_gamma</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best_mae: </span><span class="si">{</span><span class="n">best_mae</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>best alpha: 0.30000000000000004
+best beta: 0.1
+best_gamma: 0.6
+best_mae: 19.16077209125565
+</pre></div>
+</div>
+</div>
+</div>
+<section id="entrenar-modelo">
+<h2>ENTRENAR MODELO<a class="headerlink" href="#entrenar-modelo" title="Permalink to this heading">#</a></h2>
+<p>El horizonte de predicción será de 24 horas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau_test</span><span class="o">=</span><span class="mi">24</span> <span class="c1"># horizonte de predicción</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tes_model_best</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span>\
+                    <span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">best_beta</span><span class="p">,</span> <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">best_gamma</span><span class="p">)</span>
+                    
+<span class="n">y_pred_t</span> <span class="o">=</span> <span class="n">tes_model_best</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">tau_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tes_pred</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tes_model_best</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">n_first</span> <span class="o">=</span> <span class="n">tes_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ermita</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;TES&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">tes_pred</span><span class="p">[</span><span class="n">n_first</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Al observar el grafico de la serie ajustada, se logra apreciar a simple vista que el modelo no tiene un buen ajuste con respecto a la serie original, tomando valores negativos en algunos puntos, los cuales no son adecuados al comportamiento normal del <em>pm10</em>, que solo toma valores positivos.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;pm10_arima&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;TES&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">axarr</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Suavizamiento Exponencial Triple&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/5639c12517070be0c03581590d37a4b7da8713b4b654851613c171c9ec76c0dd.png" src="_images/5639c12517070be0c03581590d37a4b7da8713b4b654851613c171c9ec76c0dd.png" />
+</div>
+</div>
+<p>El siguiente grafico muestra los resultados obtenidos al entrenar el modelo de Suavizamiento Exponencial Triple. La predicción dista de los resultados reales para el conjunto de prueba, con una diferencia abismal en las primeras horas predichas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">fecha</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred_t</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forecast&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2605b4354a0af70ad1c2835874d269079eb9768bf99defb2ec34f55de189ca64.png" src="_images/2605b4354a0af70ad1c2835874d269079eb9768bf99defb2ec34f55de189ca64.png" />
+</div>
+</div>
+</section>
+<section id="evaluar-modelo">
+<h2>EVALUAR MODELO<a class="headerlink" href="#evaluar-modelo" title="Permalink to this heading">#</a></h2>
+<p>Las metricas de evaluación obtenidas para este modelo se muestran a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_24dl</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">set_metrics</span><span class="o">=</span><span class="n">forecast_accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred_t</span><span class="p">),</span> <span class="s2">&quot;24 days&quot;</span><span class="p">)</span>
+<span class="n">set_metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAE</th>
+      <th>MSE</th>
+      <th>MAPE</th>
+      <th>RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24 days</th>
+      <td>19.160944</td>
+      <td>545.204776</td>
+      <td>4.861918</td>
+      <td>23.34962</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El valor del <em>MAPE</em> indica que la predicción esta mas de un 400% desviada de los valores reales de <em>pm10</em>, por lo que la predicción obtenida con este modelo no es muy buena.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred_t</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">autocorrelation_plot</span><span class="p">(</span><span class="n">pred_error</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ACF for Prediction Error&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0f2aa971386ddf13b114765ce9585c86a2fbdeb24ef5b3b1614cd473628112c3.png" src="_images/0f2aa971386ddf13b114765ce9585c86a2fbdeb24ef5b3b1614cd473628112c3.png" />
+</div>
+</div>
+<p>El grafico de ACF indica que no existe autocorrelación significativa entre los errores de predicción.</p>
+<p>En cuanto a los residuos, se evalua si estos cumplen los supuestos de normalidad, homocedasticidad e independencia.</p>
+<p>En el grafico de Autocorrelación se logra apreciar que la autocorrelación de los residuos es estadisticamente significativa, y además tiene un patrón marcado, lo que indica que todavia existe información sobre el componente estacional que no ha sido captada por el modelo.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_pacf</span><span class="p">,</span> <span class="n">plot_acf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Plot ACF and PACF</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plot_acf</span><span class="p">(</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">plot_pacf</span><span class="p">(</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/a0da462c9dc71ffe8cc4bf81420587ee8be8fbe0ee3d95b110509b601afc2e8a.png" src="_images/a0da462c9dc71ffe8cc4bf81420587ee8be8fbe0ee3d95b110509b601afc2e8a.png" />
+</div>
+</div>
+<p>Lo anterior se reafirma al realiza la prueba de Ljung–Box , con un nivel de significancia de 0.05. Se rechaza la hipotesis nula para la prueba, lo que indica que la autocorrelación existente entre los residuos es distinta de cero.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acf_djia</span><span class="p">,</span> <span class="n">confint_djia</span><span class="p">,</span> <span class="n">qstat_djia</span><span class="p">,</span> <span class="n">pvalues_djia</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span>
+                                                                 <span class="n">nlags</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                                                 <span class="n">qstat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">p_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pvalues_djia</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is accepted at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is rejected at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Null hypothesis is rejected at lag = 0 for p-val = 0.0
+Null hypothesis is rejected at lag = 1 for p-val = 0.0
+Null hypothesis is rejected at lag = 2 for p-val = 0.0
+Null hypothesis is rejected at lag = 3 for p-val = 0.0
+Null hypothesis is rejected at lag = 4 for p-val = 0.0
+Null hypothesis is rejected at lag = 5 for p-val = 0.0
+Null hypothesis is rejected at lag = 6 for p-val = 0.0
+Null hypothesis is rejected at lag = 7 for p-val = 0.0
+Null hypothesis is rejected at lag = 8 for p-val = 0.0
+Null hypothesis is rejected at lag = 9 for p-val = 0.0
+Null hypothesis is rejected at lag = 10 for p-val = 0.0
+Null hypothesis is rejected at lag = 11 for p-val = 0.0
+Null hypothesis is rejected at lag = 12 for p-val = 0.0
+Null hypothesis is rejected at lag = 13 for p-val = 0.0
+Null hypothesis is rejected at lag = 14 for p-val = 0.0
+Null hypothesis is rejected at lag = 15 for p-val = 0.0
+Null hypothesis is rejected at lag = 16 for p-val = 0.0
+Null hypothesis is rejected at lag = 17 for p-val = 0.0
+Null hypothesis is rejected at lag = 18 for p-val = 0.0
+Null hypothesis is rejected at lag = 19 for p-val = 0.0
+Null hypothesis is rejected at lag = 20 for p-val = 0.0
+Null hypothesis is rejected at lag = 21 for p-val = 0.0
+Null hypothesis is rejected at lag = 22 for p-val = 0.0
+Null hypothesis is rejected at lag = 23 for p-val = 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se analiza el grafico de normalidad y de densidad, y se realiza la prueba de Shapiro-Wilk para evlaur la normalidad de los residuos.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">concat</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.gofplots</span> <span class="kn">import</span> <span class="n">qqplot</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/5ec695629de266523499514768d22006993b268c1f711dfbdc9c571df00b448e.png" src="_images/5ec695629de266523499514768d22006993b268c1f711dfbdc9c571df00b448e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">shapiro</span>
+
+<span class="c1"># conduct the Shapiro-Wilk Test</span>
+<span class="n">shapiro</span><span class="p">(</span><span class="n">tes_model_best</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ShapiroResult(statistic=0.9898489117622375, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se obtiene que los residuos no cumplen el supuesto de normalidad, bajo un nivel de significancia de 0.05, al rechazar la hipotesis nula de la prueba (los residuos provienen de una distribución normal)</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="arima">
+<h1>ARIMA<a class="headerlink" href="#arima" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span> 
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.tsa.api</span> <span class="k">as</span> <span class="nn">smtsa</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aicVal</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ari</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">maj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">arima_obj</span> <span class="o">=</span> <span class="n">smtsa</span><span class="o">.</span><span class="n">ARIMA</span><span class="p">(</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="n">ari</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">maj</span><span class="p">))</span>
+                <span class="n">arima_obj_fit</span><span class="o">=</span><span class="n">arima_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+                <span class="n">aicVal</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">ari</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">maj</span><span class="p">,</span> <span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">aic</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se busca el mejor modelo ARIMA optimizando la metrica AIC.</p>
+<p>El mejor modelo ARIMA es de orden:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAIC</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">aicVal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AR(p)&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;MA(q)&#39;</span><span class="p">,</span> <span class="s1">&#39;AIC&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best ARIMA parameters based on AIC:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">dfAIC</span><span class="p">[</span><span class="n">dfAIC</span><span class="o">.</span><span class="n">AIC</span> <span class="o">==</span> <span class="n">dfAIC</span><span class="o">.</span><span class="n">AIC</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best ARIMA parameters based on AIC:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AR(p)</th>
+      <th>d</th>
+      <th>MA(q)</th>
+      <th>AIC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>405635.829024</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="id1">
+<h2>ENTRENAR MODELO<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arima_obj</span> <span class="o">=</span> <span class="n">smtsa</span><span class="o">.</span><span class="n">ARIMA</span><span class="p">(</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">arima_obj_fit</span> <span class="o">=</span> <span class="n">arima_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>           <td>y</td>        <th>  No. Observations:  </th>    <td>51096</td>   
+</tr>
+<tr>
+  <th>Model:</th>            <td>ARIMA(2, 1, 2)</td>  <th>  Log Likelihood     </th> <td>-202812.913</td>
+</tr>
+<tr>
+  <th>Date:</th>            <td>Mon, 10 Jun 2024</td> <th>  AIC                </th> <td>405635.827</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>13:10:10</td>     <th>  BIC                </th> <td>405680.034</td> 
+</tr>
+<tr>
+  <th>Sample:</th>                  <td>0</td>        <th>  HQIC               </th> <td>405649.660</td> 
+</tr>
+<tr>
+  <th></th>                     <td> - 51096</td>     <th>                     </th>      <td> </td>     
+</tr>
+<tr>
+  <th>Covariance Type:</th>        <td>opg</td>       <th>                     </th>      <td> </td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+     <td></td>       <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>ar.L1</th>  <td>    1.3622</td> <td>    0.024</td> <td>   57.714</td> <td> 0.000</td> <td>    1.316</td> <td>    1.408</td>
+</tr>
+<tr>
+  <th>ar.L2</th>  <td>   -0.4955</td> <td>    0.018</td> <td>  -27.992</td> <td> 0.000</td> <td>   -0.530</td> <td>   -0.461</td>
+</tr>
+<tr>
+  <th>ma.L1</th>  <td>   -1.5274</td> <td>    0.025</td> <td>  -62.274</td> <td> 0.000</td> <td>   -1.575</td> <td>   -1.479</td>
+</tr>
+<tr>
+  <th>ma.L2</th>  <td>    0.5358</td> <td>    0.024</td> <td>   22.136</td> <td> 0.000</td> <td>    0.488</td> <td>    0.583</td>
+</tr>
+<tr>
+  <th>sigma2</th> <td>  164.1579</td> <td>    0.479</td> <td>  342.882</td> <td> 0.000</td> <td>  163.220</td> <td>  165.096</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>1.81</td> <th>  Jarque-Bera (JB):  </th> <td>132434.35</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.18</td> <th>  Prob(JB):          </th>   <td>0.00</td>   
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>0.58</td> <th>  Skew:              </th>   <td>0.89</td>   
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td> <th>  Kurtosis:          </th>   <td>10.69</td>  
+</tr>
+</table><br/><br/>Warnings:<br/>[1] Covariance matrix calculated using the outer product of gradients (complex-step).</div></div>
+</div>
+<p>Del resumen anterior se obtiene, para un nivel de significancia de 0.05:</p>
+<ul class="simple">
+<li><p>Los coeficientes son significativos (p-valor &lt; 0.05)</p></li>
+<li><p>Los residuos son independientes (Ljung-Box p-valor &gt; 0.05)</p></li>
+<li><p>Los residuos no presentan heteroscedasticidad (Heteroskedasticity (H) p-valor &gt; 0.05)</p></li>
+<li><p>Se rechaza la hipotesis de normalidad, por lo cual los residuos no tienen distribución normal (Jarque-Bera p-valor &lt;0.05)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arima_pred</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">n_first</span> <span class="o">=</span> <span class="n">arima_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ermita</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;ARIMA&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">arima_pred</span><span class="p">[</span><span class="n">n_first</span><span class="p">:]</span>
+<span class="n">diffval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;diffval&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">diffval</span><span class="p">[</span><span class="n">n_first</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Al realizar el entrenamiento del modelo, se ajusta la serie de tiempo. La serie tiempo ajustada tiene un mejor ajuste al observado en el modelo de Suavizamiento Exponencial Triple.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;pm10_arima&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;ARIMA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">axarr</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ARIMA(2,1,2)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/64e51dc122d337fa3635ec3422adaf070ee476dc0cc567331c9104c41b579688.png" src="_images/64e51dc122d337fa3635ec3422adaf070ee476dc0cc567331c9104c41b579688.png" />
+</div>
+</div>
+<p>Al realizar la predicción para un horizonte de 24 horas, se obtiene los valores obtenidos simulan una linea constnate que no capta la variabilidad de la serie de tiempo para el <em>pm10</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pred_arima</span> <span class="o">=</span> <span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">test_24dl_x</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">fecha</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">test_24dl</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">pred_arima</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forecast&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/36d1d446e7b6f37447f8d855cb6dfbe978f85f8b9a440742356ef4d4a39b5753.png" src="_images/36d1d446e7b6f37447f8d855cb6dfbe978f85f8b9a440742356ef4d4a39b5753.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>EVALUAR MODELO<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Las metricas de evaluación obtenidas para este modelo se muestran a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arima_metrics</span><span class="o">=</span><span class="n">forecast_accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_arima</span><span class="p">),</span> <span class="s2">&quot;24 days&quot;</span><span class="p">)</span>
+<span class="n">arima_metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAE</th>
+      <th>MSE</th>
+      <th>MAPE</th>
+      <th>RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24 days</th>
+      <td>15.289504</td>
+      <td>491.203154</td>
+      <td>0.415128</td>
+      <td>22.163103</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El valor del <em>MAPE</em> indica que las predicciones obtenidas distan un 41% por arriba o por debajo de los valores observados. En cuanto a la raiz del error cuadratico medio (RMSE), se puede decir que las predicciones obtenidas se desvian alrededor de 22 µg/m3, de los valores reales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_arima</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>En cuanto a la autocorrelación en los errores de predicción, al observar el grafico de autocorrelación se detecta que correlación con el primer error, mientras que las correlaciones para los demás errores no son significativas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">autocorrelation_plot</span><span class="p">(</span><span class="n">pred_error</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ACF for Prediction Error&#39;</span><span class="p">);</span><span class="n">pred_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_arima</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/30df5db4d8214f66745f17a9a88d37754f440831895bcd5759b1722d27166116.png" src="_images/30df5db4d8214f66745f17a9a88d37754f440831895bcd5759b1722d27166116.png" />
+</div>
+</div>
+<p>Al analizar los residuos se confirma que el supuesto de normalidad no se cumple para, debido a que la distribución mostrada por los residuos no se asemeja a la normal, y el grafico QQ-plot muestra desviaciones en los extremos. En cuanto a la autocorrelación, solo se acepta la hipotesis nula de la prueba Ljung-Box para el primer residuo, lo que indica que es el unico que se considera independiente, los demás residuos si presentan correlación. Lo anterior indica que el modelo no se ajustó adecuadamento a los datos, por lo que existe información que el modelo no logra captar aún.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d0a4ff2640e214778f105b0a603348a28182bdc33050603c43a9cb7fa4ad12da.png" src="_images/d0a4ff2640e214778f105b0a603348a28182bdc33050603c43a9cb7fa4ad12da.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acf_djia</span><span class="p">,</span> <span class="n">confint_djia</span><span class="p">,</span> <span class="n">qstat_djia</span><span class="p">,</span> <span class="n">pvalues_djia</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">arima_obj_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span>
+                                                                 <span class="n">nlags</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                                                 <span class="n">qstat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">p_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pvalues_djia</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is accepted at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is rejected at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Null hypothesis is accepted at lag = 0 for p-val = 0.1598976385874913
+Null hypothesis is rejected at lag = 1 for p-val = 0.0006910361618951041
+Null hypothesis is rejected at lag = 2 for p-val = 0.0003956932944176029
+Null hypothesis is rejected at lag = 3 for p-val = 0.0007702904054350443
+Null hypothesis is rejected at lag = 4 for p-val = 0.0009693240066950291
+Null hypothesis is rejected at lag = 5 for p-val = 0.001216150452063847
+Null hypothesis is rejected at lag = 6 for p-val = 0.001715615837267159
+Null hypothesis is rejected at lag = 7 for p-val = 0.003187394392036525
+Null hypothesis is rejected at lag = 8 for p-val = 0.0035964090656981688
+Null hypothesis is rejected at lag = 9 for p-val = 0.005643296492691674
+Null hypothesis is rejected at lag = 10 for p-val = 3.689630652559742e-05
+Null hypothesis is rejected at lag = 11 for p-val = 1.3090515504061361e-07
+Null hypothesis is rejected at lag = 12 for p-val = 8.038955290815212e-08
+Null hypothesis is rejected at lag = 13 for p-val = 5.443752751065961e-09
+Null hypothesis is rejected at lag = 14 for p-val = 2.4843703384628842e-09
+Null hypothesis is rejected at lag = 15 for p-val = 4.927547203639486e-09
+Null hypothesis is rejected at lag = 16 for p-val = 1.7418273769544937e-11
+Null hypothesis is rejected at lag = 17 for p-val = 7.544053879877391e-13
+Null hypothesis is rejected at lag = 18 for p-val = 1.987980798465241e-15
+Null hypothesis is rejected at lag = 19 for p-val = 1.970390183273771e-22
+Null hypothesis is rejected at lag = 20 for p-val = 5.511416005291098e-22
+Null hypothesis is rejected at lag = 21 for p-val = 9.529792936713624e-43
+Null hypothesis is rejected at lag = 22 for p-val = 2.5111788131814852e-152
+Null hypothesis is rejected at lag = 23 for p-val = 0.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="arima-rolling">
+<h1>ARIMA - ROLLING<a class="headerlink" href="#arima-rolling" title="Permalink to this heading">#</a></h1>
+<p>A continuación se realiza la predicción utilizando el modelo ARIMA con <em>Rolling</em>, para predecir las 24 horas siguientes con un horizonte de 1.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">arima_rolling</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
+    
+    <span class="n">predictions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">best_order</span><span class="p">)</span>
+        <span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">forecast</span><span class="p">()</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;predicted=</span><span class="si">%f</span><span class="s1">, expected=</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">obs</span><span class="p">))</span>
+        
+    <span class="k">return</span> <span class="n">predictions</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="id3">
+<h2>ENTRENAR MODELO<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_24dl</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">yhat_24d</span>  <span class="o">=</span> <span class="n">arima_rolling</span><span class="p">(</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">test_24dl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>predicted=35.248057, expected=49.300000
+predicted=48.674215, expected=45.100000
+predicted=43.893417, expected=37.300000
+predicted=36.916224, expected=34.800000
+predicted=34.953849, expected=38.300000
+predicted=38.064026, expected=44.000000
+predicted=42.756608, expected=61.200000
+predicted=56.814783, expected=53.400000
+predicted=49.349628, expected=96.000000
+predicted=84.811435, expected=98.600000
+predicted=84.971216, expected=63.900000
+predicted=54.907068, expected=43.900000
+predicted=39.378082, expected=53.200000
+predicted=48.775831, expected=54.100000
+predicted=49.988127, expected=50.500000
+predicted=47.218024, expected=45.200000
+predicted=43.120069, expected=31.500000
+predicted=32.130626, expected=41.400000
+predicted=41.299369, expected=40.600000
+predicted=40.623864, expected=23.700000
+predicted=26.558373, expected=29.000000
+predicted=31.796324, expected=39.300000
+predicted=40.551807, expected=27.300000
+predicted=30.107075, expected=73.500000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Al observar el grafico de las predicciones con <em>rolling</em>, se observa un mejor ajuste de las predicciones con respecto a los valores reales de <em>pm10</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">fecha</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">test_24dl</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">yhat_24d</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forecast&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b7634ff52a3f135d9180d24eb2dbbde81783c6e550ce99ad8f67c25d7e4c988c.png" src="_images/b7634ff52a3f135d9180d24eb2dbbde81783c6e550ce99ad8f67c25d7e4c988c.png" />
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>EVALUAR MODELO<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Las metricas de evaluación obtenidas para este modelo se muestran a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arima_metrics</span><span class="o">=</span><span class="n">forecast_accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yhat_24d</span><span class="p">),</span> <span class="s2">&quot;24 days&quot;</span><span class="p">)</span>
+<span class="n">arima_metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAE</th>
+      <th>MSE</th>
+      <th>MAPE</th>
+      <th>RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24 days</th>
+      <td>11.532251</td>
+      <td>268.36396</td>
+      <td>0.274156</td>
+      <td>16.381818</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El valor del <em>MAPE</em> indica que las predicciones obtenidas distan un 27% por arriba o por debajo de los valores observados, siendo un valor mucho menor al obtenido con el modelo de Suavizamiento Exponencial Triple y ARIMA. En cuanto a la raiz del error cuadratico medio (RMSE), se puede decir que las predicciones obtenidas se desvian alrededor de 16 µg/m3, de los valores reales, siendo un valor menor al obtenido en el modelo ARIMA.</p>
+<p>En cuanto a los errores de predicción, no se observa correlación significativa en el grafico ACF, por lo que los errores son independientes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yhat_24d</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">autocorrelation_plot</span><span class="p">(</span><span class="n">pred_error</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ACF for Prediction Error&#39;</span><span class="p">);</span><span class="n">pred_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yhat_24d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4b965fcdf98e3aa172a83c712b0842dce1bf5d3a0a2d4c023264b77f048b538d.png" src="_images/4b965fcdf98e3aa172a83c712b0842dce1bf5d3a0a2d4c023264b77f048b538d.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sarima">
+<h1>SARIMA<a class="headerlink" href="#sarima" title="Permalink to this heading">#</a></h1>
+<p>Ahora se entrena un modelo SARIMA, es decir, un modelo ARIMA contemplando el componente estacional. En este caso se asume una estacionalidad con frecuencia 24, al ser una serie horaria.</p>
+<section id="id5">
+<h2>ENTRENAR MODELO<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>Se busca el mejor modelo SARIMA optimizando el valor de AIC. Se obtiene un modelo SARIMA de orden (2, 1, 2)x(1, 1, 1)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">ermita</span><span class="p">[</span><span class="s2">&quot;pm10_arima&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">ermita</span><span class="p">[</span><span class="s2">&quot;pm10_arima&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">mod</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">statespace</span><span class="o">.</span><span class="n">SARIMAX</span><span class="p">(</span><span class="n">ermita</span><span class="p">[</span><span class="s2">&quot;pm10_arima&quot;</span><span class="p">],</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+<span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
+<span class="n">sarimax</span><span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">sarimax</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>              <td>pm10_arima</td>            <th>  No. Observations:  </th>    <td>51096</td>   
+</tr>
+<tr>
+  <th>Model:</th>           <td>SARIMAX(2, 1, 2)x(1, 1, [1], 24)</td> <th>  Log Likelihood     </th> <td>-199610.679</td>
+</tr>
+<tr>
+  <th>Date:</th>                    <td>Mon, 10 Jun 2024</td>         <th>  AIC                </th> <td>399235.358</td> 
+</tr>
+<tr>
+  <th>Time:</th>                        <td>13:42:49</td>             <th>  BIC                </th> <td>399297.245</td> 
+</tr>
+<tr>
+  <th>Sample:</th>                          <td>0</td>                <th>  HQIC               </th> <td>399254.724</td> 
+</tr>
+<tr>
+  <th></th>                             <td> - 51096</td>             <th>                     </th>      <td> </td>     
+</tr>
+<tr>
+  <th>Covariance Type:</th>                <td>opg</td>               <th>                     </th>      <td> </td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>        <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>ar.L1</th>    <td>    0.1592</td> <td>    0.082</td> <td>    1.947</td> <td> 0.052</td> <td>   -0.001</td> <td>    0.319</td>
+</tr>
+<tr>
+  <th>ar.L2</th>    <td>    0.3790</td> <td>    0.059</td> <td>    6.395</td> <td> 0.000</td> <td>    0.263</td> <td>    0.495</td>
+</tr>
+<tr>
+  <th>ma.L1</th>    <td>   -0.4124</td> <td>    0.081</td> <td>   -5.086</td> <td> 0.000</td> <td>   -0.571</td> <td>   -0.253</td>
+</tr>
+<tr>
+  <th>ma.L2</th>    <td>   -0.5547</td> <td>    0.080</td> <td>   -6.969</td> <td> 0.000</td> <td>   -0.711</td> <td>   -0.399</td>
+</tr>
+<tr>
+  <th>ar.S.L24</th> <td>    0.0472</td> <td>    0.003</td> <td>   13.495</td> <td> 0.000</td> <td>    0.040</td> <td>    0.054</td>
+</tr>
+<tr>
+  <th>ma.S.L24</th> <td>   -0.9849</td> <td>    0.001</td> <td>-1401.796</td> <td> 0.000</td> <td>   -0.986</td> <td>   -0.984</td>
+</tr>
+<tr>
+  <th>sigma2</th>   <td>  145.1128</td> <td>    0.415</td> <td>  349.370</td> <td> 0.000</td> <td>  144.299</td> <td>  145.927</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>0.34</td> <th>  Jarque-Bera (JB):  </th> <td>138580.02</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.56</td> <th>  Prob(JB):          </th>   <td>0.00</td>   
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>0.62</td> <th>  Skew:              </th>   <td>0.75</td>   
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td> <th>  Kurtosis:          </th>   <td>10.93</td>  
+</tr>
+</table><br/><br/>Warnings:<br/>[1] Covariance matrix calculated using the outer product of gradients (complex-step).</div></div>
+</div>
+<p>Del resumen anterior se obtiene, para un nivel de significancia de 0.1:</p>
+<ul class="simple">
+<li><p>Los coeficientes son significativos (p-valor &lt; 0.1)</p></li>
+<li><p>Los residuos son independientes (Ljung-Box p-valor &gt; 0.1)</p></li>
+<li><p>Los residuos no presentan heteroscedasticidad (Heteroskedasticity (H) p-valor &gt; 0.1)</p></li>
+<li><p>Se rechaza la hipotesis de normalidad, por lo cual los residuos no tienen distribución normal (Jarque-Bera p-valor &lt;0.1)</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sarimax_pred</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sarimax</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">n_first</span> <span class="o">=</span> <span class="n">sarimax_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ermita</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;SARIMAX&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">sarimax_pred</span><span class="p">[</span><span class="n">n_first</span><span class="p">:]</span>
+<span class="n">diffval_x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sarimax</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;diffval_x&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">diffval_x</span><span class="p">[</span><span class="n">n_first</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Al ajustar el modelo a la serie de tiempo del <em>pm10</em> a simple vista se logra observar que el ajuste no es muy bueno, y que la serie ajustada tiene menor magnitud que la serie original.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;pm10_arima&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">ermita</span><span class="p">[</span><span class="s1">&#39;SARIMAX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">200</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">axarr</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ARIMA(2,1,2)(1,1,1,24)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM10&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/f912f552bcfd5fa83f3978c134986751c2644c32080dd32df615844545e65ff4.png" src="_images/f912f552bcfd5fa83f3978c134986751c2644c32080dd32df615844545e65ff4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_sarimax</span> <span class="o">=</span> <span class="n">sarimax</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>La predicción obtenida, logra captar un poco mejor la variabilidad de la serie de tiempo que el modelo ARIMA sin factor estacional, aunque no logra un mejor ajuste que el modelo de ARIMA <em>rolling</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">fecha</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">ermita</span><span class="o">.</span><span class="n">pm10_arima</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">test_24dl_x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_sarimax</span><span class="p">)</span> <span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forecast&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1e7fb89c80c3eaf4086dc7be4be32af8264925424817b4e56561388ab7ad38b6.png" src="_images/1e7fb89c80c3eaf4086dc7be4be32af8264925424817b4e56561388ab7ad38b6.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>EVALUAR MODELO<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Las metricas de evaluación obtenidas para este modelo se muestran a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_24dl_x</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">pm10</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">sarimax_metrics</span><span class="o">=</span><span class="n">forecast_accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl_x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_sarimax</span> <span class="p">),</span> <span class="s2">&quot;24 days&quot;</span><span class="p">)</span>
+<span class="n">sarimax_metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAE</th>
+      <th>MSE</th>
+      <th>MAPE</th>
+      <th>RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24 days</th>
+      <td>14.177827</td>
+      <td>328.506588</td>
+      <td>0.398828</td>
+      <td>18.124751</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El valor del <em>MAPE</em> indica que las predicciones obtenidas distan un 39% por arriba o por debajo de los valores observados. En cuanto a la raiz del error cuadratico medio (RMSE), se puede decir que las predicciones obtenidas se desvian alrededor de 18 µg/m3, de los valores reales.</p>
+<p>En cuanto a los errores de predicción, no se observa correlación significativa en el grafico ACF, por lo que los errores son independientes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_error_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_24dl_x</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pred_sarimax</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">autocorrelation_plot</span><span class="p">(</span><span class="n">pred_error_x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ACF for Prediction Error&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f4d1d122015cedfa278fe8a971db540d8aa75032bca8f9262dcc35342fbc24b5.png" src="_images/f4d1d122015cedfa278fe8a971db540d8aa75032bca8f9262dcc35342fbc24b5.png" />
+</div>
+</div>
+<p>Al analizar los residuos se confirma que el supuesto de normalidad no se cumple para, debido a que la distribución mostrada por los residuos no se asemeja a la normal, y el grafico QQ-plot muestra desviaciones en los extremos. En cuanto a la autocorrelación, solo se acepta la hipotesis nula de la prueba Ljung-Box para los primeros 5 residuos, lo que indica que son los unicos que se consideran independientes, los demás residuos si presentan correlación. Lo anterior indica que el modelo no se ajustó adecuadamento a los datos, por lo que existe información que el modelo no logra captar aún.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sarimax</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7da460f1b9916a195f9bce32b1b173bf347ed37bf36899eedc70c17aeee775bf.png" src="_images/7da460f1b9916a195f9bce32b1b173bf347ed37bf36899eedc70c17aeee775bf.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acf_djia</span><span class="p">,</span> <span class="n">confint_djia</span><span class="p">,</span> <span class="n">qstat_djia</span><span class="p">,</span> <span class="n">pvalues_djia</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">sarimax</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span>
+                                                                 <span class="n">nlags</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                                                 <span class="n">qstat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">p_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pvalues_djia</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is accepted at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is rejected at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Null hypothesis is accepted at lag = 0 for p-val = 0.5903222860575178
+Null hypothesis is accepted at lag = 1 for p-val = 0.20050117207036366
+Null hypothesis is accepted at lag = 2 for p-val = 0.35715360495527754
+Null hypothesis is accepted at lag = 3 for p-val = 0.19686066004691694
+Null hypothesis is accepted at lag = 4 for p-val = 0.14414885322030446
+Null hypothesis is rejected at lag = 5 for p-val = 0.04978862363189598
+Null hypothesis is accepted at lag = 6 for p-val = 0.07129146722542061
+Null hypothesis is rejected at lag = 7 for p-val = 0.025512349215370298
+Null hypothesis is rejected at lag = 8 for p-val = 0.001087795014823609
+Null hypothesis is rejected at lag = 9 for p-val = 4.523615768323633e-05
+Null hypothesis is rejected at lag = 10 for p-val = 3.412637636174788e-05
+Null hypothesis is rejected at lag = 11 for p-val = 3.2284396517559575e-05
+Null hypothesis is rejected at lag = 12 for p-val = 5.012920371101029e-05
+Null hypothesis is rejected at lag = 13 for p-val = 9.47106388657251e-05
+Null hypothesis is rejected at lag = 14 for p-val = 0.00011806441568643055
+Null hypothesis is rejected at lag = 15 for p-val = 2.8839900732698686e-05
+Null hypothesis is rejected at lag = 16 for p-val = 5.111797139623278e-05
+Null hypothesis is rejected at lag = 17 for p-val = 9.08587466673306e-05
+Null hypothesis is rejected at lag = 18 for p-val = 0.00014378020242614614
+Null hypothesis is rejected at lag = 19 for p-val = 4.490658912691861e-05
+Null hypothesis is rejected at lag = 20 for p-val = 4.931102142767958e-05
+Null hypothesis is rejected at lag = 21 for p-val = 1.8216968329900087e-09
+Null hypothesis is rejected at lag = 22 for p-val = 1.1795221166939534e-20
+Null hypothesis is rejected at lag = 23 for p-val = 2.833937915959205e-20
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="eda_final.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Análisis Exploratorio de los datos (EDA)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="SVM_final.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">SUPPORT VECTOR REGRESSOR</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Suavizamiento Exponencial Triple</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenar-modelo">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluar-modelo">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#arima">ARIMA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#arima-rolling">ARIMA - ROLLING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">EVALUAR MODELO</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sarima">SARIMA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ENTRENAR MODELO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">EVALUAR MODELO</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Alvarez, Angie Bertel, Karina Rodriguez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
